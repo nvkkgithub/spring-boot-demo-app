@@ -1,0 +1,51 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+  
+  <!--
+    default ~/.m2/repository
+  <localRepository>C:\Users\S417466\Venkat\EMIRATES\DemoExternalREPO</localRepository>
+  -->
+ 
+	
+  
+  <profiles>
+    <profile>
+      <id>SpringProj</id>
+      <properties>
+        <maven.test.skip>true</maven.test.skip>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
+        <source.jdkversion>1.8</source.jdkversion>
+        <target.jdkversion>1.8</target.jdkversion>
+      </properties>
+      <repositories>
+        
+		
+		<!--
+		<repository>
+			<id>maven_central</id>
+			<name>Maven Central</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+		</repository>
+		-->
+		
+		<repository>
+		   <id>repository.springframework.maven.release</id>
+		   <name>Spring Framework Maven Release Repository</name>
+		   <url>http://maven.springframework.org/release</url>
+		</repository>
+		
+		
+      </repositories>
+    </profile>
+
+  </profiles>
+  
+    <!-- Tomcat Build -->
+	
+	<activeProfiles>
+		<activeProfile>SpringProj</activeProfile>
+	</activeProfiles>
+	
+
+</settings>
+
