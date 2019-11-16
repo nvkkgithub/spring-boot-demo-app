@@ -11,6 +11,7 @@ public class TicketingApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		
 	}
 
 }
