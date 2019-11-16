@@ -10,7 +10,7 @@ mvn spring-boot run
 Running on Docker container
 ```
 docker build -t dockernvkk/springbootapp .
-docker run --rm -p 8080:8080 dockernvkk/springbootapp:latest
+docker run --rm -p 8081:8081 dockernvkk/springbootapp:latest
 ```
 
 Publish to Docker Hub.
