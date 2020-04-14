@@ -19,7 +19,8 @@ spring:
         mode: HTML
 server:
     servlet:
+        context-path: /springboot
         session:
             cookie:
                 http-only: true
-    port: 8081
+    port: 8080

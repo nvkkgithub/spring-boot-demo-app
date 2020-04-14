@@ -10,8 +10,9 @@
 	</parent>
 	<groupId>com.vk.spring</groupId>
 	<artifactId>spring-boot-app</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>spring-boot-app</name>
+	<packaging>jar</packaging>
 	<description>Spring Boot Application</description>
 
 	<properties>
@@ -51,6 +52,28 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <configuration>
+                    <mainClass>com.vk.spring.HelloWorldApp</mainClass>
+                </configuration>
+			</plugin>
+			
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <!-- <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.vk.spring.HelloWorldApp</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration> -->
+            </plugin>
 
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
@@ -109,6 +132,60 @@
 
 	</build>
 
+	<profiles>
+		<profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.20.1</version>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>hellojava</name>
+                                    <build>
+                                        <from>openjdk:latest</from>
+                                        <assembly>
+											<descriptorRef>artifact</descriptorRef>
+											<!-- Package artifact into 'maven' directory of container -->
+                                        </assembly>
+                                        <cmd>java -jar maven/${project.name}-${project.version}.jar</cmd>
+									</build>
+									<!-- Container will start and wait for 'Hello World!' text -->
+                                    <run>
+                                        <wait>
+                                            <log>Hello World!</log>
+                                        </wait>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+								<id>docker:build</id>
+								<!-- Phase 'mvn package -Pdocker' will execute id 'docker:build'-->
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+								<id>docker:start</id>
+								<!-- Phase 'mvn install -Pdocker' will execute id 'docker:start'-->
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                    <goal>logs</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+	</profiles>
 	
 
 </project>
